@@ -33,7 +33,7 @@ class BannerModel: NSObject {
     
     let provider = MoyaProvider<MyService>()
     
-    func getBannerList() {
+    func getBannerList(completion: @escaping ([BannerData]) -> Void) {
         provider.request(.getBannerList) { (result) in
             switch result {
             case let .success(response):
@@ -41,6 +41,7 @@ class BannerModel: NSObject {
                     let decoder = JSONDecoder()
                     let bannerResult = try decoder.decode(BannerResult.self, from: response.data)
                     self.bannerList = bannerResult.recent
+                    completion(bannerResult.recent)
                 } catch {
                     print("网络异常!")
                 }

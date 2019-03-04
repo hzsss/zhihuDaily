@@ -32,6 +32,8 @@ class HZSHomeViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let bannerModel = BannerModel()
-        bannerModel.getBannerList()
+        bannerModel.getBannerList { (bannerList) in
+            print("\(bannerList)")
+        }
     }
 }

@@ -50,6 +50,10 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
         tableView.tableHeaderView = bannerView
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = false // 后续优化
+    }
+    
     override func viewDidLayoutSubviews() {
         tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 200)
     }
@@ -71,9 +75,12 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let detailVc = HZSDetailViewController()
         newsModel.getNewsDetailData(userId: stories[indexPath.row].storyID) { (newsDetailData) in
-            print("newsDetailData\(newsDetailData)")
+            detailVc.newsDetail = newsDetailData
         }
+        navigationController?.pushViewController(detailVc, animated: true)
+        navigationController?.navigationBar.isHidden = true
     }
     
     // 设置缺省页

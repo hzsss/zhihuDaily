@@ -15,6 +15,7 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
     var stories: [Story] = [] // 日报列表
     var topStories: [TopStory] = [] // 轮播列表
     var bannerView: BannerView? // 轮播视图
+    var newsModel: NewsModel = NewsModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,14 +31,13 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
         
         // 下拉刷新
         tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
-            let newsModel = NewsModel()
-            newsModel.getNewsData { [weak self] (topstories, stories) in
+            self.newsModel.getNewsData { [weak self] (topStories, stories) in
                 guard let sself = self else { return }
-                sself.topStories = topstories
+                sself.topStories = topStories
                 sself.stories = stories
                 DispatchQueue.main.async {
                     sself.tableView.reloadData()
-                    sself.bannerView?.showBanner(with: sself.topStories)
+                    sself.bannerView?.showBanner(with: topStories)
                 }
                 sself.tableView.mj_header.endRefreshing()
             }
@@ -71,6 +71,9 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        newsModel.getNewsDetailData(userId: stories[indexPath.row].storyID) { (newsDetailData) in
+            print("newsDetailData\(newsDetailData)")
+        }
     }
     
     // 设置缺省页

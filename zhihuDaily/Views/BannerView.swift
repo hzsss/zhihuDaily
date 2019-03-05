@@ -90,15 +90,18 @@ class BannerView: UIView, UIScrollViewDelegate {
         rightBannerDetailView.frame = CGRect(x: width * 2, y: 0, width: width, height: height)
         
         // 初始化视图
-        leftBannerDetailView.update(with: self.topStories![0])
-        centerBannerDetailView.update(with: self.topStories![1])
-        rightBannerDetailView.update(with: self.topStories![2])
+        let leftIndex = (currentPage - 1 + topStories!.count) % topStories!.count
+        let centerIndex = (currentPage + topStories!.count) % topStories!.count
+        let rightIndex = (currentPage + 1 + topStories!.count) % topStories!.count
+        
+        leftBannerDetailView.update(with: self.topStories![leftIndex])
+        centerBannerDetailView.update(with: self.topStories![centerIndex])
+        rightBannerDetailView.update(with: self.topStories![rightIndex])
         
         // 添加定时器
         timer = Timer.init(timeInterval: 3.0, repeats: true, block: { [weak self] (timer) in
             guard let sself = self else { return }
-            sself.currentPage = (sself.currentPage + 1) % 3
-            sself.scrollView.setContentOffset(CGPoint(x: width * CGFloat(sself.currentPage), y: 0), animated: true)
+            sself.scrollView.setContentOffset(CGPoint(x: width * 2, y: 0), animated: true)
         })
         RunLoop.current.add(timer!, forMode: .common)
     }
@@ -128,17 +131,35 @@ class BannerView: UIView, UIScrollViewDelegate {
     
     // 定时器滑动时调用
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        // 设置当前页
-        currentPage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
+        resetContent(scrollView)
     }
     
     // 手动滑动时调用
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        // 设置当前页
-        currentPage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
+        resetContent(scrollView)
     }
     
-    func resetContent() {
+    func resetContent(_ scrollView: UIScrollView) {
+        // 滑动的距离
+        let scrollDistance = scrollView.contentOffset.x - scrollView.bounds.width
         
+        // 设置当前页
+        if scrollDistance > 0 { // 下一页
+            currentPage = (currentPage + 1 + topStories!.count) % topStories!.count
+        } else if scrollDistance < 0 { // 上一页
+            currentPage = (currentPage - 1 + topStories!.count) % topStories!.count
+        }
+        
+        // 重置偏移量
+        scrollView.setContentOffset(CGPoint(x: scrollView.bounds.width, y: 0), animated: false)
+        
+        // 更新图片数据
+        let leftIndex = (currentPage - 1 + topStories!.count) % topStories!.count
+        let centerIndex = currentPage
+        let rightIndex = (currentPage + 1 + topStories!.count) % topStories!.count
+        
+        leftBannerDetailView.update(with: topStories![leftIndex])
+        centerBannerDetailView.update(with: topStories![centerIndex])
+        rightBannerDetailView.update(with: topStories![rightIndex])
     }
 }

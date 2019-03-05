@@ -7,21 +7,43 @@
 //
 
 import UIKit
+import DZNEmptyDataSet
+import MJRefresh
 
-class HZSHomeViewController: UITableViewController {
+class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
 
+    var stories: [Story] = []
+    var topStories: [TopStory] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.register(UINib.init(nibName: "HomeNewsCell", bundle: nil), forCellReuseIdentifier: "HZSHomeNewsCell")
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        
+        // 设置缺省页
+        tableView.emptyDataSetDelegate = self
+        tableView.emptyDataSetSource = self
+        tableView.tableFooterView = UIView()
+        
+        // 刷新
+        tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            let newsModel = NewsModel()
+            newsModel.getNewsData { [weak self] (topstories, stories) in
+                guard let sself = self else { return }
+                sself.topStories = topstories
+                sself.stories = stories
+                DispatchQueue.main.async {
+                    sself.tableView.reloadData()
+                }
+                sself.tableView.mj_header.endRefreshing()
+            }
+        })
+        
+        tableView.mj_header.beginRefreshing()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return stories.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -30,10 +52,8 @@ class HZSHomeViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let bannerModel = BannerModel()
-        bannerModel.getBannerList { (bannerList) in
-            print("\(bannerList)")
-        }
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let text: String = "暂无数据"
+        return NSAttributedString(string: text)
     }
 }

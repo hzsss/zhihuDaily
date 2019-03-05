@@ -46,7 +46,7 @@ class BannerDetailView: UIView {
     }
 }
 
-class BannerView: UIView {
+class BannerView: UIView, UIScrollViewDelegate {
     var topStories: [TopStory]?
     var currentPage: Int = 0 // 当前页
     var timer: Timer?
@@ -59,6 +59,7 @@ class BannerView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        scrollView.delegate = self
         addSubview(scrollView)
     }
     
@@ -75,7 +76,10 @@ class BannerView: UIView {
         let height = scrollView.bounds.height
         
         scrollView.contentSize = CGSize(width: width * 3, height: height)
+        // 显示中间的视图
+        scrollView.contentOffset = CGPoint(x: width, y: 0)
         scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
         
         scrollView.addSubview(leftBannerDetailView)
         scrollView.addSubview(centerBannerDetailView)
@@ -100,6 +104,7 @@ class BannerView: UIView {
     }
     
     func showBanner(with topStories: [TopStory]) {
+        // 刷新数据时清除定时器(这个时机有问题)
         if timer != nil {
             timer!.invalidate()
             timer = nil
@@ -108,5 +113,32 @@ class BannerView: UIView {
         self.topStories = topStories
         
         configScrollView()
+    }
+    
+    // scrollViewDelegate
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        // 暂停定时器
+        timer?.fireDate = Date.distantFuture
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        // 两秒后启动定时器
+        timer?.fireDate = Date(timeInterval: 2.0, since: Date())
+    }
+    
+    // 定时器滑动时调用
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        // 设置当前页
+        currentPage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
+    }
+    
+    // 手动滑动时调用
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        // 设置当前页
+        currentPage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
+    }
+    
+    func resetContent() {
+        
     }
 }

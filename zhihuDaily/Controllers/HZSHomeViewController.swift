@@ -69,6 +69,10 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
         return 100
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     // 设置缺省页
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text: String = "暂无数据"

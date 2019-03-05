@@ -18,6 +18,7 @@
 		3E2C992C222D14BB00D132A2 /* MyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C992B222D14BB00D132A2 /* MyService.swift */; };
 		3E2C992F222D1CE300D132A2 /* HomeNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C992D222D1CE300D132A2 /* HomeNewsCell.swift */; };
 		3E2C9930222D1CE300D132A2 /* HomeNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2C992E222D1CE300D132A2 /* HomeNewsCell.xib */; };
+		3EDE2336222E0D660016EF07 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDE2335222E0D660016EF07 /* BannerView.swift */; };
 		5FFF88FE4700A4E5DAC0E87B /* Pods_zhihuDaily.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D88CFF603A3E24658BF525E /* Pods_zhihuDaily.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		3E2C992B222D14BB00D132A2 /* MyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyService.swift; sourceTree = "<group>"; };
 		3E2C992D222D1CE300D132A2 /* HomeNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsCell.swift; sourceTree = "<group>"; };
 		3E2C992E222D1CE300D132A2 /* HomeNewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeNewsCell.xib; sourceTree = "<group>"; };
+		3EDE2335222E0D660016EF07 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		70D5A4B7E84CADC1CFA65A4A /* Pods-zhihuDaily.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zhihuDaily.release.xcconfig"; path = "Target Support Files/Pods-zhihuDaily/Pods-zhihuDaily.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -164,6 +166,7 @@
 			children = (
 				3E2C992D222D1CE300D132A2 /* HomeNewsCell.swift */,
 				3E2C992E222D1CE300D132A2 /* HomeNewsCell.xib */,
+				3EDE2335222E0D660016EF07 /* BannerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 			files = (
 				3E2C9927222D120100D132A2 /* NewsModel.swift in Sources */,
 				3E2C992C222D14BB00D132A2 /* MyService.swift in Sources */,
+				3EDE2336222E0D660016EF07 /* BannerView.swift in Sources */,
 				3E2C992F222D1CE300D132A2 /* HomeNewsCell.swift in Sources */,
 				3E2C98D6222CE4AF00D132A2 /* AppDelegate.swift in Sources */,
 				3E2C9925222D0FEC00D132A2 /* HZSHomeViewController.swift in Sources */,

@@ -12,8 +12,9 @@ import MJRefresh
 
 class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
 
-    var stories: [Story] = []
-    var topStories: [TopStory] = []
+    var stories: [Story] = [] // 日报列表
+    var topStories: [TopStory] = [] // 轮播列表
+    var bannerView: BannerView? // 轮播视图
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +26,7 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
         tableView.emptyDataSetSource = self
         tableView.tableFooterView = UIView()
         
-        // 刷新
+        // 下拉刷新
         tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
             let newsModel = NewsModel()
             newsModel.getNewsData { [weak self] (topstories, stories) in
@@ -34,12 +35,21 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
                 sself.stories = stories
                 DispatchQueue.main.async {
                     sself.tableView.reloadData()
+                    sself.bannerView?.showBanner(with: sself.topStories)
                 }
                 sself.tableView.mj_header.endRefreshing()
             }
         })
         
         tableView.mj_header.beginRefreshing()
+        
+        // 轮播器
+        bannerView = BannerView()
+        tableView.tableHeaderView = bannerView
+    }
+    
+    override func viewDidLayoutSubviews() {
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 100)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,6 +67,7 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
         return 100
     }
     
+    // 设置缺省页
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text: String = "暂无数据"
         return NSAttributedString(string: text)

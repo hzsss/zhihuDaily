@@ -62,7 +62,7 @@ class NewsModel: NSObject {
     let provider = MoyaProvider<MyService>()
     
     func getNewsData(completion: @escaping ([TopStory], [Story]) -> Void) {
-        provider.request(.getBannerList) { (result) in
+        provider.request(.getNewsList) { (result) in
             switch result {
             case let .success(response):
                 do {

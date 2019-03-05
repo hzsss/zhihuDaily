@@ -7,18 +7,25 @@
 //
 
 import UIKit
+import Kingfisher
 
 class HomeNewsCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var coverImageView: UIImageView!
+    
+    var story: Story? {
+        didSet {
+            titleLabel.text = story?.title
+            
+            let imageURL = URL(string: story?.images.first ?? "")
+            coverImageView.kf.setImage(with: imageURL)
+        }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        
+    }
 }

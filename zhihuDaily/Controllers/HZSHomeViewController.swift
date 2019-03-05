@@ -47,9 +47,14 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HZSHomeNewsCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HZSHomeNewsCell", for: indexPath) as! HomeNewsCell
+        cell.story = stories[indexPath.row]
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {

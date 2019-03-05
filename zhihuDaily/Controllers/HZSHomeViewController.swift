@@ -18,6 +18,8 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "知乎日报"
 
         self.tableView.register(UINib.init(nibName: "HomeNewsCell", bundle: nil), forCellReuseIdentifier: "HZSHomeNewsCell")
         
@@ -49,7 +51,7 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
     }
     
     override func viewDidLayoutSubviews() {
-        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 100)
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 200)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

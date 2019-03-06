@@ -23,6 +23,8 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
         }
     }
     
+    var prePoint: CGPoint = CGPoint(x: 0, y: 0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,9 +32,17 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.scrollView.contentInset = UIEdgeInsets(top: 200, left: 0, bottom: 0, right: 0)
         webView.uiDelegate = self
+        webView.scrollView.addSubview(headerView)
         view.addSubview(webView)
         
         webView.scrollView.addSubview(headerView)
+        
+        guard let gesture: UIGestureRecognizer = navigationController?.interactivePopGestureRecognizer,
+            let gestureView: UIView = gesture.view else { return }
+        gesture.isEnabled = false
+        
+        let panGesture: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(closeVc(_ :)))
+        gestureView.addGestureRecognizer(panGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,5 +67,15 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
         html += "</body>"
         html += "</html>"
         return html
+    }
+    
+    @objc func closeVc(_ panGesture: UIPanGestureRecognizer) {
+        let point: CGPoint = panGesture.translation(in: view)
+        
+        if point.x > prePoint.x {
+            navigationController?.popViewController(animated: true)
+        }
+        
+        prePoint = point
     }
 }

@@ -10,21 +10,15 @@ import UIKit
 import WebKit
 
 class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecognizerDelegate {
-    @IBOutlet weak var bgImageView: UIImageView!
-    
-    @IBOutlet weak var titleLabel: UILabel!
-    
-    @IBOutlet weak var sourceLabel: UILabel!
+
+    var headerView: WebHeaderView = WebHeaderView(frame: .zero)
     
     var webView: WKWebView!
     
     var newsDetail: NewsDetail? {
         didSet {
-            titleLabel.text = newsDetail?.title
-            sourceLabel.text = newsDetail?.image_source
-            
             let imageURL = URL(string: newsDetail?.image ?? "")
-            bgImageView.kf.setImage(with: imageURL)
+            headerView.setupWebHeaderView(imageURL: imageURL, title: newsDetail?.title, source: newsDetail?.image_source)
             webView.loadHTMLString(concatHTML(css: newsDetail!.css!, body: newsDetail!.body!), baseURL: nil)
         }
     }
@@ -34,8 +28,11 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
 
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.scrollView.contentInset = UIEdgeInsets(top: 200, left: 0, bottom: 0, right: 0)
         webView.uiDelegate = self
         view.addSubview(webView)
+        
+        webView.scrollView.addSubview(headerView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,10 +42,8 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
     }
     
     override func viewDidLayoutSubviews() {
-        webView.frame = CGRect(x: 0,
-                               y: bgImageView.frame.maxY,
-                               width: view.bounds.width,
-                               height: view.bounds.height - bgImageView.bounds.height)
+        webView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+        headerView.frame = CGRect(x: 0, y: -200, width: view.bounds.width, height: 200)
     }
     
     private func concatHTML(css: [String], body: String) -> String {

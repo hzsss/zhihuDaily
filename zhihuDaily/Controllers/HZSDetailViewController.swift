@@ -35,8 +35,6 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
         webView.scrollView.addSubview(headerView)
         view.addSubview(webView)
         
-        webView.scrollView.addSubview(headerView)
-        
         guard let gesture: UIGestureRecognizer = navigationController?.interactivePopGestureRecognizer,
             let gestureView: UIView = gesture.view else { return }
         gesture.isEnabled = false

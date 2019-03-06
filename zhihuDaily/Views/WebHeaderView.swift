@@ -9,14 +9,23 @@
 import UIKit
 import SnapKit
 
-class WebHeaderView: UIImageView {
+class WebHeaderView: UIView {
     
     var titleLabel: UILabel = UILabel()
     var sourceLabel: UILabel = UILabel()
+    var bgImageView: UIImageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        titleLabel.textColor = .white
+        titleLabel.numberOfLines = 0
+        sourceLabel.textColor = .white
+        sourceLabel.font = UIFont.systemFont(ofSize: 10.0)
+        
+        bgImageView.contentMode = .scaleAspectFill
+        
+        addSubview(bgImageView)
         addSubview(titleLabel)
         addSubview(sourceLabel)
     }
@@ -26,22 +35,26 @@ class WebHeaderView: UIImageView {
     }
     
     override func layoutSubviews() {
-        titleLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(20)
-            make.top.equalTo(100)
-        }
+        let sourceLabelSize = sourceLabel.sizeThatFits(bounds.size)
+        sourceLabel.frame = CGRect(x: bounds.width - sourceLabelSize.width - 10,
+                                   y: bounds.height - sourceLabelSize.height - 5,
+                                   width: sourceLabelSize.width,
+                                   height: sourceLabelSize.height)
         
-        sourceLabel.snp.makeConstraints { (make) in
-            make.right.equalTo(20)
-            make.bottom.equalTo(20)
-        }
+        
+        let titleLabelHeight = titleLabel.sizeThatFits(bounds.size).height
+        titleLabel.frame = CGRect(x: 10, y: sourceLabel.frame.minY - titleLabelHeight - 10, width: bounds.width, height: titleLabelHeight)
+        
+        bgImageView.frame = bounds
     }
     
     func setupWebHeaderView(imageURL: URL?, title: String?, source: String?) {
         
-        self.kf.setImage(with: imageURL)
+        bgImageView.kf.setImage(with: imageURL)
         titleLabel.text = title
-        sourceLabel.text = source
+        if let sourceText = source {
+            sourceLabel.text = "图片 \(sourceText)"
+        }
         
         setNeedsLayout()
     }

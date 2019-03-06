@@ -12,13 +12,18 @@ import Kingfisher
 class BannerDetailView: UIView {
     var titleLabel: UILabel = UILabel()
     var imageView: UIImageView = UIImageView()
+    var titleBgView: UIView = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         titleLabel.textColor = .white
+        titleBgView.backgroundColor = .black
+        titleBgView.alpha = 0.7
+        imageView.contentMode = .scaleAspectFill
         
         addSubview(imageView)
+        addSubview(titleBgView)
         addSubview(titleLabel)
     }
     
@@ -31,7 +36,11 @@ class BannerDetailView: UIView {
         
         // 标题高度
         let titleLabelHeight = titleLabel.sizeThatFits(bounds.size).height
-        titleLabel.frame = CGRect(x: 10, y: bounds.height - titleLabelHeight, width: bounds.width, height: titleLabelHeight)
+        titleLabel.frame = CGRect(x: 10, y: bounds.height - titleLabelHeight - 10, width: bounds.width, height: titleLabelHeight)
+        
+        // 标题背景
+        let titleBgViewHeight = titleLabelHeight + 20
+        titleBgView.frame = CGRect(x: 0, y: bounds.height - titleBgViewHeight, width: bounds.width, height: titleBgViewHeight)
     }
     
     func update(with topStory: TopStory) {

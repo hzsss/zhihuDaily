@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class HZSDetailViewController: UIViewController, WKUIDelegate {
+class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var bgImageView: UIImageView!
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -36,6 +36,12 @@ class HZSDetailViewController: UIViewController, WKUIDelegate {
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
         view.addSubview(webView)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.interactivePopGestureRecognizer?.delegate = self;
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true;
     }
     
     override func viewDidLayoutSubviews() {

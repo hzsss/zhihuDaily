@@ -51,7 +51,7 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = false // 后续优化
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewDidLayoutSubviews() {
@@ -80,7 +80,6 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
             detailVc.newsDetail = newsDetailData
         }
         navigationController?.pushViewController(detailVc, animated: true)
-        navigationController?.navigationBar.isHidden = true
     }
     
     // 设置缺省页

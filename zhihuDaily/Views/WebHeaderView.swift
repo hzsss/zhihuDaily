@@ -23,7 +23,7 @@ class WebHeaderView: UIView {
         sourceLabel.textColor = .white
         sourceLabel.font = UIFont.systemFont(ofSize: 10.0)
         
-        bgImageView.contentMode = .scaleAspectFill
+//        bgImageView.contentMode = .scaleAspectFill
         
         addSubview(bgImageView)
         addSubview(titleLabel)

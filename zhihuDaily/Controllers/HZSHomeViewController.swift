@@ -47,6 +47,14 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
         
         // 轮播器
         bannerView = BannerView()
+        bannerView?.tapBannerDetailView = { [weak self] (topStory) in
+            guard let topStory = topStory, let sself = self else { return }
+            let detailVc = HZSDetailViewController()
+            sself.newsModel.getNewsDetailData(userId: topStory.storyID) { (newsDetailData) in
+                detailVc.newsDetail = newsDetailData
+            }
+            sself.navigationController?.pushViewController(detailVc, animated: true)
+        }
         tableView.tableHeaderView = bannerView
     }
     

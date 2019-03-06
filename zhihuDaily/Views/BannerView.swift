@@ -14,6 +14,8 @@ class BannerDetailView: UIView {
     var imageView: UIImageView = UIImageView()
     var titleBgView: UIView = UIView()
     
+    var topStory: TopStory?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -51,6 +53,8 @@ class BannerDetailView: UIView {
         let imageURL = URL(string: topStory.imageURL)
         imageView.kf.setImage(with: imageURL)
         
+        self.topStory = topStory
+        
         setNeedsLayout()
     }
 }
@@ -61,6 +65,8 @@ class BannerView: UIView, UIScrollViewDelegate {
     var timer: Timer?
     var scrollView: UIScrollView = UIScrollView()
     
+    var tapBannerDetailView: ((_ topStory: TopStory?) -> Void)?
+    
     var leftBannerDetailView: BannerDetailView = BannerDetailView()
     var centerBannerDetailView: BannerDetailView = BannerDetailView()
     var rightBannerDetailView: BannerDetailView = BannerDetailView()
@@ -70,6 +76,9 @@ class BannerView: UIView, UIScrollViewDelegate {
         
         scrollView.delegate = self
         addSubview(scrollView)
+        
+        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapBanner))
+        centerBannerDetailView.addGestureRecognizer(tapGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -170,5 +179,11 @@ class BannerView: UIView, UIScrollViewDelegate {
         leftBannerDetailView.update(with: topStories![leftIndex])
         centerBannerDetailView.update(with: topStories![centerIndex])
         rightBannerDetailView.update(with: topStories![rightIndex])
+    }
+    
+    @objc func tapBanner() {
+        if tapBannerDetailView != nil {
+            tapBannerDetailView?(centerBannerDetailView.topStory)
+        }
     }
 }

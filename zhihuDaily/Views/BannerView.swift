@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import SnapKit
 
 class BannerDetailView: UIView {
     var titleLabel: UILabel = UILabel()
@@ -61,9 +62,14 @@ class BannerDetailView: UIView {
 
 class BannerView: UIView, UIScrollViewDelegate {
     var topStories: [TopStory]?
-    var currentPage: Int = 0 // 当前页
-    var timer: Timer?
     var scrollView: UIScrollView = UIScrollView()
+    var currentPage: Int = 0 {
+        didSet {
+            pageControl.currentPage = currentPage
+        }
+    }
+    var timer: Timer?
+    var pageControl: UIPageControl = UIPageControl()
     
     var tapBannerDetailView: ((_ topStory: TopStory?) -> Void)?
     
@@ -74,8 +80,11 @@ class BannerView: UIView, UIScrollViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        pageControl.pageIndicatorTintColor = .lightGray
+        pageControl.currentPageIndicatorTintColor = .black
         scrollView.delegate = self
         addSubview(scrollView)
+        addSubview(pageControl)
         
         let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapBanner))
         centerBannerDetailView.addGestureRecognizer(tapGesture)
@@ -86,7 +95,12 @@ class BannerView: UIView, UIScrollViewDelegate {
     }
     
     override func layoutSubviews() {
-        scrollView.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
+        pageControl.snp.makeConstraints { (make) in
+            make.centerX.equalTo(center)
+            make.bottom.equalTo(0)
+            make.height.equalTo(20)
+        }
+        scrollView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height - 20)
     }
     
     func configScrollView() { // 后续需要优化，太冗余
@@ -130,6 +144,8 @@ class BannerView: UIView, UIScrollViewDelegate {
             timer!.invalidate()
             timer = nil
         }
+        
+        pageControl.numberOfPages = topStories.count
         
         self.topStories = topStories
         

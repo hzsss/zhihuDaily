@@ -56,6 +56,8 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
             sself.navigationController?.pushViewController(detailVc, animated: true)
         }
         tableView.tableHeaderView = bannerView
+        
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +65,7 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
     }
     
     override func viewDidLayoutSubviews() {
-        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 200)
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 250)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

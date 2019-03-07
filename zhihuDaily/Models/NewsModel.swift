@@ -68,6 +68,25 @@ struct NewsDetail: Codable {
     var css: [String]?
 }
 
+// 新闻额外信息
+//"long_comments": 0,
+//"popularity": 161,
+//"short_comments": 19,
+//"comments": 19,
+struct NewsExtra: Codable {
+    var longComments: Int?
+    var shortComments: Int?
+    var popularity: Int?
+    var comments: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case longComments = "long_comments"
+        case shortComments = "short_comments"
+        case popularity
+        case comments
+    }
+}
+
 
 // 获取轮播图数据
 class NewsModel: NSObject {
@@ -101,6 +120,24 @@ class NewsModel: NSObject {
                     let decoder = JSONDecoder()
                     let newsDetailData = try decoder.decode(NewsDetail.self, from: response.data)
                     completion(newsDetailData)
+                } catch {
+                    print("网络异常")
+                }
+            case let .failure(error):
+                print("文章数据获取错误\(error)")
+            }
+        }
+    }
+    
+    // 获取文章额外信息
+    func getNewsExtraData(userId: Int, completion: @escaping (NewsExtra) -> Void) {
+        provider.request(.getNewsExtra(userId: userId)) { (result) in
+            switch result {
+            case let .success(response):
+                do {
+                    let decoder = JSONDecoder()
+                    let newsExtraData = try decoder.decode(NewsExtra.self, from: response.data)
+                    completion(newsExtraData)
                 } catch {
                     print("网络异常")
                 }

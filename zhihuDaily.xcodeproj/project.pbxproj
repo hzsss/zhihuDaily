@@ -19,6 +19,7 @@
 		3E2C992F222D1CE300D132A2 /* HomeNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C992D222D1CE300D132A2 /* HomeNewsCell.swift */; };
 		3E2C9930222D1CE300D132A2 /* HomeNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2C992E222D1CE300D132A2 /* HomeNewsCell.xib */; };
 		3E518F91222E6BE8006BEED9 /* HZSDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E518F8F222E6BE8006BEED9 /* HZSDetailViewController.swift */; };
+		3E90D93C2230E29400DD1C82 /* HZSDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E90D93B2230E29400DD1C82 /* HZSDetailViewController.xib */; };
 		3E92B940222F79F50030B3AF /* WebHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E92B93F222F79F50030B3AF /* WebHeaderView.swift */; };
 		3EDE2336222E0D660016EF07 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDE2335222E0D660016EF07 /* BannerView.swift */; };
 		5FFF88FE4700A4E5DAC0E87B /* Pods_zhihuDaily.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D88CFF603A3E24658BF525E /* Pods_zhihuDaily.framework */; };
@@ -62,6 +63,7 @@
 		3E2C992D222D1CE300D132A2 /* HomeNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsCell.swift; sourceTree = "<group>"; };
 		3E2C992E222D1CE300D132A2 /* HomeNewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeNewsCell.xib; sourceTree = "<group>"; };
 		3E518F8F222E6BE8006BEED9 /* HZSDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HZSDetailViewController.swift; sourceTree = "<group>"; };
+		3E90D93B2230E29400DD1C82 /* HZSDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HZSDetailViewController.xib; sourceTree = "<group>"; };
 		3E92B93F222F79F50030B3AF /* WebHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebHeaderView.swift; sourceTree = "<group>"; };
 		3EDE2335222E0D660016EF07 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		70D5A4B7E84CADC1CFA65A4A /* Pods-zhihuDaily.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zhihuDaily.release.xcconfig"; path = "Target Support Files/Pods-zhihuDaily/Pods-zhihuDaily.release.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			children = (
 				3E2C9924222D0FEC00D132A2 /* HZSHomeViewController.swift */,
 				3E518F8F222E6BE8006BEED9 /* HZSDetailViewController.swift */,
+				3E90D93B2230E29400DD1C82 /* HZSDetailViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				3E2C98DD222CE4B900D132A2 /* Assets.xcassets in Resources */,
 				3E2C98DB222CE4AF00D132A2 /* Main.storyboard in Resources */,
 				3E2C9930222D1CE300D132A2 /* HomeNewsCell.xib in Resources */,
+				3E90D93C2230E29400DD1C82 /* HZSDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

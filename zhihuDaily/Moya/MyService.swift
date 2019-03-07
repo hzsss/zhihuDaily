@@ -12,6 +12,7 @@ import Moya
 enum MyService {
     case getNewsList // 获取热报数据
     case getNewsDetail(userId: Int) // 获取文章详情数据
+    case getNewsExtra(userId: Int) // 获取新闻额外信息
 }
 
 extension MyService: TargetType {
@@ -26,6 +27,8 @@ extension MyService: TargetType {
             return "4/news/latest"
         case let .getNewsDetail(userId):
             return "4/news/\(userId)"
+        case let .getNewsExtra(userId):
+            return "4/story-extra/\(userId)"
         }
     }
     
@@ -46,6 +49,8 @@ extension MyService: TargetType {
         case .getNewsList:
             return .requestPlain
         case .getNewsDetail:
+            return .requestPlain
+        case .getNewsExtra:
             return .requestPlain
         }
     }

@@ -53,6 +53,9 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
             sself.newsModel.getNewsDetailData(userId: topStory.storyID) { (newsDetailData) in
                 detailVc.newsDetail = newsDetailData
             }
+            sself.newsModel.getNewsExtraData(userId: topStory.storyID, completion: { (newsExtraData) in
+                detailVc.newsExtra = newsExtraData
+            })
             sself.navigationController?.pushViewController(detailVc, animated: true)
         }
         tableView.tableHeaderView = bannerView
@@ -90,6 +93,9 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
         newsModel.getNewsDetailData(userId: stories[indexPath.row].storyID) { (newsDetailData) in
             detailVc.newsDetail = newsDetailData
         }
+        newsModel.getNewsExtraData(userId: stories[indexPath.row].storyID, completion: { (newsExtraData) in
+            detailVc.newsExtra = newsExtraData
+        })
         navigationController?.pushViewController(detailVc, animated: true)
     }
     

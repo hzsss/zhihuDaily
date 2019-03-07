@@ -13,7 +13,9 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
 
     var headerView: WebHeaderView = WebHeaderView(frame: .zero)
     
-    var webView: WKWebView!
+    @IBOutlet weak var likeBtn: UIButton!
+    @IBOutlet weak var commentBtn: UIButton!
+    @IBOutlet weak var webView: WKWebView!
     
     var newsDetail: NewsDetail? {
         didSet {
@@ -23,17 +25,22 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
         }
     }
     
+    var newsExtra: NewsExtra? {
+        didSet {
+            guard let popularity = newsExtra?.popularity, let comments = newsExtra?.comments else { return }
+            likeBtn.setTitle(String(popularity), for: .normal)
+            commentBtn.setTitle(String(comments), for: .normal)
+        }
+    }
+    
     var prePoint: CGPoint = CGPoint(x: 0, y: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let webConfiguration = WKWebViewConfiguration()
-        webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView.scrollView.contentInset = UIEdgeInsets(top: 180, left: 0, bottom: 0, right: 0)
+        webView.scrollView.contentInset = UIEdgeInsets(top: 180, left: 0, bottom: 30, right: 0)
         webView.uiDelegate = self
         webView.scrollView.addSubview(headerView)
-        view.addSubview(webView)
         
         guard let gesture: UIGestureRecognizer = navigationController?.interactivePopGestureRecognizer,
             let gestureView: UIView = gesture.view else { return }
@@ -51,7 +58,6 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        webView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         headerView.frame = CGRect(x: 0, y: -200, width: view.bounds.width, height: 200)
     }
     
@@ -77,4 +83,9 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
         
         prePoint = point
     }
+    
+    @IBAction func tapBackBtn() {
+        navigationController?.popViewController(animated: true)
+    }
+    
 }

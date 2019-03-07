@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HZSDetailViewController" customModule="zhihuDaily" customModuleProvider="target">
+            <connections>
+                <outlet property="commentBtn" destination="aVV-Ye-BZ4" id="AEl-El-Ieg"/>
+                <outlet property="likeBtn" destination="O9R-E7-8mH" id="Kd4-0A-D0A"/>
+                <outlet property="view" destination="PNa-Dc-aEZ" id="Noa-PV-Dny"/>
+                <outlet property="webView" destination="g2N-xo-QWM" id="qFM-Nd-evv"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="PNa-Dc-aEZ">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g2N-xo-QWM">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <wkWebViewConfiguration key="configuration">
+                        <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                        <wkPreferences key="preferences"/>
+                    </wkWebViewConfiguration>
+                </wkWebView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YDs-li-CXm">
+                    <rect key="frame" x="0.0" y="627" width="375" height="40"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="g3I-Hu-kDr"/>
+                    </constraints>
+                </view>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="SNo-xz-Uu3">
+                    <rect key="frame" x="0.0" y="632" width="375" height="30"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oki-0S-6Hw">
+                            <rect key="frame" x="0.0" y="0.0" width="86.5" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <state key="normal" title="返回">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="tapBackBtn" destination="-1" eventType="touchUpInside" id="uwV-1Q-x0O"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tW5-n1-o8j">
+                            <rect key="frame" x="96.5" y="0.0" width="86" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <state key="normal" title="分享">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O9R-E7-8mH">
+                            <rect key="frame" x="192.5" y="0.0" width="86.5" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <state key="normal">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aVV-Ye-BZ4">
+                            <rect key="frame" x="289" y="0.0" width="86" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <state key="normal">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="6Lo-zo-l0S"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="CEu-vQ-Y7J" firstAttribute="trailing" secondItem="SNo-xz-Uu3" secondAttribute="trailing" id="9BX-Xk-8kk"/>
+                <constraint firstItem="CEu-vQ-Y7J" firstAttribute="trailing" secondItem="YDs-li-CXm" secondAttribute="trailing" id="FYO-8h-RPm"/>
+                <constraint firstItem="YDs-li-CXm" firstAttribute="leading" secondItem="CEu-vQ-Y7J" secondAttribute="leading" id="IPI-zF-ZHh"/>
+                <constraint firstItem="g2N-xo-QWM" firstAttribute="top" secondItem="PNa-Dc-aEZ" secondAttribute="top" id="L4h-ZT-GQS"/>
+                <constraint firstItem="SNo-xz-Uu3" firstAttribute="leading" secondItem="CEu-vQ-Y7J" secondAttribute="leading" id="Lha-EB-aTb"/>
+                <constraint firstItem="CEu-vQ-Y7J" firstAttribute="trailing" secondItem="g2N-xo-QWM" secondAttribute="trailing" id="M5m-u9-YsN"/>
+                <constraint firstItem="YDs-li-CXm" firstAttribute="bottom" secondItem="CEu-vQ-Y7J" secondAttribute="bottom" id="VWu-PS-gta"/>
+                <constraint firstItem="CEu-vQ-Y7J" firstAttribute="bottom" secondItem="g2N-xo-QWM" secondAttribute="bottom" id="ccS-ZY-QMw"/>
+                <constraint firstItem="CEu-vQ-Y7J" firstAttribute="bottom" secondItem="SNo-xz-Uu3" secondAttribute="bottom" constant="5" id="dMS-Cp-EwT"/>
+                <constraint firstItem="g2N-xo-QWM" firstAttribute="leading" secondItem="PNa-Dc-aEZ" secondAttribute="leading" id="gl4-Rc-tc0"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="CEu-vQ-Y7J"/>
+            <point key="canvasLocation" x="504.80000000000001" y="-9.4452773613193415"/>
+        </view>
+    </objects>
+</document>

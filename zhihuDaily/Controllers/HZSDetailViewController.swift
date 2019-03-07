@@ -18,11 +18,16 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
     @IBOutlet weak var commentBtn: UIButton!
     @IBOutlet weak var webView: WKWebView!
     
+    var prePoint: CGPoint = CGPoint(x: 0, y: 0)
+    
     var newsDetail: NewsDetail? {
         didSet {
             let imageURL = URL(string: newsDetail?.image ?? "")
             headerView.setupWebHeaderView(imageURL: imageURL, title: newsDetail?.title, source: newsDetail?.image_source)
-            webView.loadHTMLString(concatHTML(css: newsDetail!.css!, body: newsDetail!.body!), baseURL: nil)
+            
+            if let css = newsDetail?.css, let body = newsDetail?.body {
+             webView.loadHTMLString(constructHTML(css: css, body: body), baseURL: nil)
+            }
         }
     }
     
@@ -34,15 +39,13 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
         }
     }
     
-    var prePoint: CGPoint = CGPoint(x: 0, y: 0)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         likeBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         commentBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
 
-        webView.uiDelegate = self
+        webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
         webView.scrollView.addSubview(headerView)
         
         guard let gesture: UIGestureRecognizer = navigationController?.interactivePopGestureRecognizer,
@@ -55,12 +58,11 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: true)
-        navigationController?.interactivePopGestureRecognizer?.delegate = self;
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true;
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         headerView.snp.makeConstraints { (make) in
             make.top.equalTo(-20)
             make.left.equalTo(0)
@@ -69,7 +71,7 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
         }
     }
     
-    private func concatHTML(css: [String], body: String) -> String {
+    private func constructHTML(css: [String], body: String) -> String {
         var html = "<html>"
         html += "<head>"
         css.forEach { html += "<link rel=\"stylesheet\" href=\($0)>" }

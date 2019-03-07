@@ -12,9 +12,9 @@ import MJRefresh
 
 class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
 
-    var stories: [Story] = [] // 日报列表
-    var topStories: [TopStory] = [] // 轮播列表
-    var bannerView: BannerView? // 轮播视图
+    var stories: [Story] = [] // 日报列表数据
+    var topStories: [TopStory] = [] // 轮播列表数据
+    var bannerView: BannerView! // 轮播视图
     var newsModel: NewsModel = NewsModel()
     
     override func viewDidLoad() {
@@ -37,7 +37,10 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
                 sself.stories = stories
                 DispatchQueue.main.async {
                     sself.tableView.reloadData()
-                    sself.bannerView?.showBanner(with: topStories)
+                    sself.bannerView.showBanner(with: topStories)
+                    
+                    let footerView: HomeFooterView = Bundle.main.loadNibNamed("HomeFooterView", owner: self, options: nil)?.first as! HomeFooterView
+                    sself.tableView.tableFooterView = footerView
                 }
                 sself.tableView.mj_header.endRefreshing()
             }
@@ -47,21 +50,14 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
         
         // 轮播器
         bannerView = BannerView()
-        bannerView?.tapBannerDetailView = { [weak self] (topStory) in
+        bannerView.tapBannerDetailView = { [weak self] (topStory) in
             guard let topStory = topStory, let sself = self else { return }
+            
             let detailVc = HZSDetailViewController()
-            sself.newsModel.getNewsDetailData(userId: topStory.storyID) { (newsDetailData) in
-                detailVc.newsDetail = newsDetailData
-            }
-            sself.newsModel.getNewsExtraData(userId: topStory.storyID, completion: { (newsExtraData) in
-                detailVc.newsExtra = newsExtraData
-            })
+            sself.setupDetailVc(detailVc, userId: topStory.storyID)
             sself.navigationController?.pushViewController(detailVc, animated: true)
         }
         tableView.tableHeaderView = bannerView
-        
-        let footerView: HomeFooterView = Bundle.main.loadNibNamed("HomeFooterView", owner: self, options: nil)?.first as! HomeFooterView
-        tableView.tableFooterView = footerView
         
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
@@ -93,13 +89,18 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let detailVc = HZSDetailViewController()
-        newsModel.getNewsDetailData(userId: stories[indexPath.row].storyID) { (newsDetailData) in
+        setupDetailVc(detailVc, userId: stories[indexPath.row].storyID)
+        navigationController?.pushViewController(detailVc, animated: true)
+    }
+    
+    // 设置 detailVc 的数据
+    func setupDetailVc(_ detailVc: HZSDetailViewController, userId: Int) {
+        newsModel.getNewsDetailData(userId: userId) { (newsDetailData) in
             detailVc.newsDetail = newsDetailData
         }
-        newsModel.getNewsExtraData(userId: stories[indexPath.row].storyID, completion: { (newsExtraData) in
+        newsModel.getNewsExtraData(userId: userId, completion: { (newsExtraData) in
             detailVc.newsExtra = newsExtraData
         })
-        navigationController?.pushViewController(detailVc, animated: true)
     }
     
     // 设置缺省页

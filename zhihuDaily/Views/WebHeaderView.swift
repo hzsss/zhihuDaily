@@ -21,11 +21,12 @@ class WebHeaderView: UIView {
         
         titleLabel.textColor = .white
         titleLabel.numberOfLines = 0
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
         sourceLabel.textColor = .white
         sourceLabel.font = UIFont.systemFont(ofSize: 10.0)
         
         shadowView.backgroundColor = .black
-        shadowView.alpha = 0.3
+        shadowView.alpha = 0.2
         bgImageView.contentMode = .scaleAspectFill
         bgImageView.layer.masksToBounds = true
         
@@ -50,7 +51,7 @@ class WebHeaderView: UIView {
         titleLabel.snp.makeConstraints { (make) in
             make.left.equalTo(10)
             make.bottom.equalTo(-(sourceLabel.bounds.height + 10))
-            make.width.equalTo(bounds.width)
+            make.width.equalTo(bounds.width - 20)
         }
         
         bgImageView.frame = bounds

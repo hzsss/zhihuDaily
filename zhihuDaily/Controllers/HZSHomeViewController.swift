@@ -65,6 +65,7 @@ class HZSHomeViewController: UITableViewController, DZNEmptyDataSetDelegate, DZN
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 250)
     }
 

@@ -13,6 +13,7 @@ class WebHeaderView: UIView {
     
     var titleLabel: UILabel = UILabel()
     var sourceLabel: UILabel = UILabel()
+    var shadowView: UIView = UIView()
     var bgImageView: UIImageView = UIImageView()
     
     override init(frame: CGRect) {
@@ -23,9 +24,13 @@ class WebHeaderView: UIView {
         sourceLabel.textColor = .white
         sourceLabel.font = UIFont.systemFont(ofSize: 10.0)
         
-//        bgImageView.contentMode = .scaleAspectFill
+        shadowView.backgroundColor = .gray
+        shadowView.alpha = 0.6
+        bgImageView.contentMode = .scaleAspectFill
+        bgImageView.layer.masksToBounds = true
         
         addSubview(bgImageView)
+        addSubview(shadowView)
         addSubview(titleLabel)
         addSubview(sourceLabel)
     }
@@ -35,6 +40,7 @@ class WebHeaderView: UIView {
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         let sourceLabelSize = sourceLabel.sizeThatFits(bounds.size)
         sourceLabel.frame = CGRect(x: bounds.width - sourceLabelSize.width - 10,
                                    y: bounds.height - sourceLabelSize.height - 5,
@@ -46,6 +52,7 @@ class WebHeaderView: UIView {
         titleLabel.frame = CGRect(x: 10, y: sourceLabel.frame.minY - titleLabelHeight - 10, width: bounds.width, height: titleLabelHeight)
         
         bgImageView.frame = bounds
+        shadowView.frame = bounds
     }
     
     func setupWebHeaderView(imageURL: URL?, title: String?, source: String?) {

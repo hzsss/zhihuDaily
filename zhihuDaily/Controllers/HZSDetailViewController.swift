@@ -30,7 +30,7 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
 
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView.scrollView.contentInset = UIEdgeInsets(top: 200, left: 0, bottom: 0, right: 0)
+        webView.scrollView.contentInset = UIEdgeInsets(top: 180, left: 0, bottom: 0, right: 0)
         webView.uiDelegate = self
         webView.scrollView.addSubview(headerView)
         view.addSubview(webView)
@@ -50,6 +50,7 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         webView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         headerView.frame = CGRect(x: 0, y: -200, width: view.bounds.width, height: 200)
     }

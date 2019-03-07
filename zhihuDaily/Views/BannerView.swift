@@ -35,6 +35,7 @@ class BannerDetailView: UIView {
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         imageView.frame = bounds
         
         // 标题高度
@@ -95,6 +96,7 @@ class BannerView: UIView, UIScrollViewDelegate {
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         pageControl.snp.makeConstraints { (make) in
             make.centerX.equalTo(center)
             make.bottom.equalTo(0)

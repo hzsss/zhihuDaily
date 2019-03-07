@@ -10,7 +10,7 @@ import UIKit
 import Moya
 
 enum MyService {
-    case getNewsList // 获取热报数据
+    case getNews // 获取热报数据
     case getNewsDetail(userId: Int) // 获取文章详情数据
     case getNewsExtra(userId: Int) // 获取新闻额外信息
 }
@@ -18,17 +18,17 @@ enum MyService {
 extension MyService: TargetType {
     
     var baseURL: URL {
-        return URL(string: "https://news-at.zhihu.com/api")!
+        return URL(string: "https://news-at.zhihu.com/api/4")!
     }
     
     var path: String {
         switch self {
-        case .getNewsList:
-            return "4/news/latest"
+        case .getNews:
+            return "news/latest"
         case let .getNewsDetail(userId):
-            return "4/news/\(userId)"
+            return "news/\(userId)"
         case let .getNewsExtra(userId):
-            return "4/story-extra/\(userId)"
+            return "story-extra/\(userId)"
         }
     }
     
@@ -46,7 +46,7 @@ extension MyService: TargetType {
     
     var task: Task {
         switch self {
-        case .getNewsList:
+        case .getNews:
             return .requestPlain
         case .getNewsDetail:
             return .requestPlain

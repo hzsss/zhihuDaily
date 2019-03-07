@@ -10,7 +10,7 @@ import UIKit
 import Moya
 
 // 最新消息
-struct NewsData: Codable {
+struct News: Codable {
     var date: String
     var stories: [Story]
     var topStories: [TopStory]
@@ -56,7 +56,7 @@ struct Story: Codable {
     }
 }
 
-// 文章详情
+// 新闻详情
 struct NewsDetail: Codable {
     var title: String?
     var body: String?
@@ -69,10 +69,6 @@ struct NewsDetail: Codable {
 }
 
 // 新闻额外信息
-//"long_comments": 0,
-//"popularity": 161,
-//"short_comments": 19,
-//"comments": 19,
 struct NewsExtra: Codable {
     var longComments: Int?
     var shortComments: Int?
@@ -87,20 +83,18 @@ struct NewsExtra: Codable {
     }
 }
 
-
-// 获取轮播图数据
 class NewsModel: NSObject {
     
     let provider = MoyaProvider<MyService>()
     
     // 获取列表数据
     func getNewsData(completion: @escaping ([TopStory], [Story]) -> Void) {
-        provider.request(.getNewsList) { (result) in
+        provider.request(.getNews) { (result) in
             switch result {
             case let .success(response):
                 do {
                     let decoder = JSONDecoder()
-                    let newsData = try decoder.decode(NewsData.self, from: response.data)
+                    let newsData = try decoder.decode(News.self, from: response.data)
                     completion(newsData.topStories, newsData.stories)
                 } catch {
                     print("网络异常!")
@@ -111,7 +105,7 @@ class NewsModel: NSObject {
         }
     }
     
-    // 获取文章详情
+    // 获取新闻详情
     func getNewsDetailData(userId: Int, completion: @escaping (NewsDetail) -> Void) {
         provider.request(.getNewsDetail(userId: userId)) { (result) in
             switch result {
@@ -129,7 +123,7 @@ class NewsModel: NSObject {
         }
     }
     
-    // 获取文章额外信息
+    // 获取新闻额外信息
     func getNewsExtraData(userId: Int, completion: @escaping (NewsExtra) -> Void) {
         provider.request(.getNewsExtra(userId: userId)) { (result) in
             switch result {

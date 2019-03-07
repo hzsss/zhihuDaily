@@ -37,6 +37,9 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        likeBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        commentBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
 
         webView.scrollView.contentInset = UIEdgeInsets(top: 180, left: 0, bottom: 30, right: 0)
         webView.uiDelegate = self

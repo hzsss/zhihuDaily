@@ -58,17 +58,17 @@
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O9R-E7-8mH">
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O9R-E7-8mH">
                             <rect key="frame" x="192.5" y="0.0" width="86.5" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <state key="normal">
+                            <state key="normal" image="like">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aVV-Ye-BZ4">
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aVV-Ye-BZ4">
                             <rect key="frame" x="289" y="0.0" width="86" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <state key="normal">
+                            <state key="normal" image="comment">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                         </button>
@@ -96,4 +96,8 @@
             <point key="canvasLocation" x="504.80000000000001" y="-9.4452773613193415"/>
         </view>
     </objects>
+    <resources>
+        <image name="comment" width="60" height="60"/>
+        <image name="like" width="60" height="60"/>
+    </resources>
 </document>

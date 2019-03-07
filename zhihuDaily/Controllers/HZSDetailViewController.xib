@@ -97,7 +97,7 @@
         </view>
     </objects>
     <resources>
-        <image name="comment" width="60" height="60"/>
-        <image name="like" width="60" height="60"/>
+        <image name="comment" width="50" height="50"/>
+        <image name="like" width="50" height="50"/>
     </resources>
 </document>

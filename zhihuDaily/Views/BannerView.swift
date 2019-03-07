@@ -72,6 +72,7 @@ class BannerDetailView: UIView {
 
 class BannerView: UIView, UIScrollViewDelegate {
     var topStories: [TopStory] = []
+    var bannerDetailViews: [BannerDetailView] = []
     var scrollView: UIScrollView = UIScrollView()
     
     var currentPage: Int = 0 {
@@ -85,10 +86,6 @@ class BannerView: UIView, UIScrollViewDelegate {
     
     var tapBannerDetailView: ((_ topStory: TopStory?) -> Void)?
     
-    var leftBannerDetailView: BannerDetailView = BannerDetailView()
-    var centerBannerDetailView: BannerDetailView = BannerDetailView()
-    var rightBannerDetailView: BannerDetailView = BannerDetailView()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -98,9 +95,6 @@ class BannerView: UIView, UIScrollViewDelegate {
         
         addSubview(scrollView)
         addSubview(pageControl)
-        
-        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapBanner))
-        centerBannerDetailView.addGestureRecognizer(tapGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -134,22 +128,26 @@ class BannerView: UIView, UIScrollViewDelegate {
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         
-        scrollView.addSubview(leftBannerDetailView)
-        scrollView.addSubview(centerBannerDetailView)
-        scrollView.addSubview(rightBannerDetailView)
+        var i: Int = 0
+        while i < 3 {
+            let bannerDetailView = BannerDetailView()
+            bannerDetailViews.append(bannerDetailView)
+            scrollView.addSubview(bannerDetailView)
+            
+            i += 1
+        }
         
-        leftBannerDetailView.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        centerBannerDetailView.frame = CGRect(x: width, y: 0, width: width, height: height)
-        rightBannerDetailView.frame = CGRect(x: width * 2, y: 0, width: width, height: height)
+        for (i, bannerDetailView) in bannerDetailViews.enumerated() {
+            bannerDetailView.frame = CGRect(x: width * CGFloat(i), y: 0, width: width, height: height)
+            
+            let index = (currentPage - 1 + i + topStories.count) % topStories.count
+            
+            bannerDetailView.update(with: self.topStories[index])
+        }
         
-        // 初始化视图
-        let leftIndex = (currentPage - 1 + topStories.count) % topStories.count
-        let centerIndex = (currentPage + topStories.count) % topStories.count
-        let rightIndex = (currentPage + 1 + topStories.count) % topStories.count
-        
-        leftBannerDetailView.update(with: self.topStories[leftIndex])
-        centerBannerDetailView.update(with: self.topStories[centerIndex])
-        rightBannerDetailView.update(with: self.topStories[rightIndex])
+        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapBanner))
+        let centerBannerDetailView: BannerDetailView = bannerDetailViews[1]
+        centerBannerDetailView.addGestureRecognizer(tapGesture)
         
         // 添加定时器
         timer = Timer.init(timeInterval: 3.0, repeats: true, block: { [weak self] (timer) in
@@ -208,18 +206,16 @@ class BannerView: UIView, UIScrollViewDelegate {
         // 重置偏移量
         scrollView.setContentOffset(CGPoint(x: scrollView.bounds.width, y: 0), animated: false)
         
-        // 更新图片数据
-        let leftIndex = (currentPage - 1 + topStories.count) % topStories.count
-        let centerIndex = currentPage
-        let rightIndex = (currentPage + 1 + topStories.count) % topStories.count
-        
-        leftBannerDetailView.update(with: topStories[leftIndex])
-        centerBannerDetailView.update(with: topStories[centerIndex])
-        rightBannerDetailView.update(with: topStories[rightIndex])
+        for (i, bannerDetailView) in bannerDetailViews.enumerated() {
+            let index = (currentPage - 1 + i + topStories.count) % topStories.count
+            
+            bannerDetailView.update(with: self.topStories[index])
+        }
     }
     
     @objc func tapBanner() {
         if tapBannerDetailView != nil {
+            let centerBannerDetailView: BannerDetailView = bannerDetailViews[1]
             tapBannerDetailView?(centerBannerDetailView.topStory)
         }
     }

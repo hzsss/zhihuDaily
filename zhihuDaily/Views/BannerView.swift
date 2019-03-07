@@ -71,14 +71,16 @@ class BannerDetailView: UIView {
 }
 
 class BannerView: UIView, UIScrollViewDelegate {
-    var topStories: [TopStory]?
+    var topStories: [TopStory] = []
     var scrollView: UIScrollView = UIScrollView()
+    
     var currentPage: Int = 0 {
         didSet {
             pageControl.currentPage = currentPage
         }
     }
-    var timer: Timer?
+    
+    var timer: Timer!
     var pageControl: UIPageControl = UIPageControl()
     
     var tapBannerDetailView: ((_ topStory: TopStory?) -> Void)?
@@ -93,6 +95,7 @@ class BannerView: UIView, UIScrollViewDelegate {
         pageControl.pageIndicatorTintColor = .lightGray
         pageControl.currentPageIndicatorTintColor = .black
         scrollView.delegate = self
+        
         addSubview(scrollView)
         addSubview(pageControl)
         
@@ -140,26 +143,26 @@ class BannerView: UIView, UIScrollViewDelegate {
         rightBannerDetailView.frame = CGRect(x: width * 2, y: 0, width: width, height: height)
         
         // 初始化视图
-        let leftIndex = (currentPage - 1 + topStories!.count) % topStories!.count
-        let centerIndex = (currentPage + topStories!.count) % topStories!.count
-        let rightIndex = (currentPage + 1 + topStories!.count) % topStories!.count
+        let leftIndex = (currentPage - 1 + topStories.count) % topStories.count
+        let centerIndex = (currentPage + topStories.count) % topStories.count
+        let rightIndex = (currentPage + 1 + topStories.count) % topStories.count
         
-        leftBannerDetailView.update(with: self.topStories![leftIndex])
-        centerBannerDetailView.update(with: self.topStories![centerIndex])
-        rightBannerDetailView.update(with: self.topStories![rightIndex])
+        leftBannerDetailView.update(with: self.topStories[leftIndex])
+        centerBannerDetailView.update(with: self.topStories[centerIndex])
+        rightBannerDetailView.update(with: self.topStories[rightIndex])
         
         // 添加定时器
         timer = Timer.init(timeInterval: 3.0, repeats: true, block: { [weak self] (timer) in
             guard let sself = self else { return }
             sself.scrollView.setContentOffset(CGPoint(x: width * 2, y: 0), animated: true)
         })
-        RunLoop.current.add(timer!, forMode: .common)
+        RunLoop.current.add(timer, forMode: .common)
     }
     
     func showBanner(with topStories: [TopStory]) {
         // 刷新数据时清除定时器(这个时机有问题)
         if timer != nil {
-            timer!.invalidate()
+            timer.invalidate()
             timer = nil
         }
         
@@ -173,12 +176,12 @@ class BannerView: UIView, UIScrollViewDelegate {
     // scrollViewDelegate
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         // 暂停定时器
-        timer?.fireDate = Date.distantFuture
+        timer.fireDate = Date.distantFuture
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         // 两秒后启动定时器
-        timer?.fireDate = Date(timeInterval: 2.0, since: Date())
+        timer.fireDate = Date(timeInterval: 2.0, since: Date())
     }
     
     // 定时器滑动时调用
@@ -197,22 +200,22 @@ class BannerView: UIView, UIScrollViewDelegate {
         
         // 设置当前页
         if scrollDistance > 0 { // 下一页
-            currentPage = (currentPage + 1 + topStories!.count) % topStories!.count
+            currentPage = (currentPage + 1 + topStories.count) % topStories.count
         } else if scrollDistance < 0 { // 上一页
-            currentPage = (currentPage - 1 + topStories!.count) % topStories!.count
+            currentPage = (currentPage - 1 + topStories.count) % topStories.count
         }
         
         // 重置偏移量
         scrollView.setContentOffset(CGPoint(x: scrollView.bounds.width, y: 0), animated: false)
         
         // 更新图片数据
-        let leftIndex = (currentPage - 1 + topStories!.count) % topStories!.count
+        let leftIndex = (currentPage - 1 + topStories.count) % topStories.count
         let centerIndex = currentPage
-        let rightIndex = (currentPage + 1 + topStories!.count) % topStories!.count
+        let rightIndex = (currentPage + 1 + topStories.count) % topStories.count
         
-        leftBannerDetailView.update(with: topStories![leftIndex])
-        centerBannerDetailView.update(with: topStories![centerIndex])
-        rightBannerDetailView.update(with: topStories![rightIndex])
+        leftBannerDetailView.update(with: topStories[leftIndex])
+        centerBannerDetailView.update(with: topStories[centerIndex])
+        rightBannerDetailView.update(with: topStories[rightIndex])
     }
     
     @objc func tapBanner() {

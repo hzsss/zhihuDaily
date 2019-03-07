@@ -41,7 +41,6 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
         likeBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         commentBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
 
-        webView.scrollView.contentInset = UIEdgeInsets(top: 180, left: 0, bottom: 30, right: 0)
         webView.uiDelegate = self
         webView.scrollView.addSubview(headerView)
         
@@ -61,7 +60,7 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        headerView.frame = CGRect(x: 0, y: -200, width: view.bounds.width, height: 200)
+        headerView.frame = CGRect(x: 0, y: -20, width: view.bounds.width, height: 220)
     }
     
     private func concatHTML(css: [String], body: String) -> String {
@@ -69,6 +68,7 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
         html += "<head>"
         css.forEach { html += "<link rel=\"stylesheet\" href=\($0)>" }
         html += "<style>img{max-width:320px !important;}</style>"
+        html += "<meta name=\"viewport\" content=\"initial-scale=3.0,width=device-width,user-scalable=0,maximum-scale=1.0\"/>"
         html += "</head>"
         html += "<body>"
         html += body

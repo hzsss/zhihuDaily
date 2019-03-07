@@ -85,7 +85,7 @@ struct NewsExtra: Codable {
 
 class NewsModel: NSObject {
     
-    let provider = MoyaProvider<MyService>()
+    let provider = MoyaProvider<NewsMoya>()
     
     // 获取列表数据
     func getNewsData(completion: @escaping ([TopStory], [Story]) -> Void) {

@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import SnapKit
 
 class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecognizerDelegate {
 
@@ -60,7 +61,12 @@ class HZSDetailViewController: UIViewController, WKUIDelegate, UIGestureRecogniz
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        headerView.frame = CGRect(x: 0, y: -20, width: view.bounds.width, height: 220)
+        headerView.snp.makeConstraints { (make) in
+            make.top.equalTo(-20)
+            make.left.equalTo(0)
+            make.width.equalTo(view.bounds.width)
+            make.height.equalTo(220)
+        }
     }
     
     private func concatHTML(css: [String], body: String) -> String {

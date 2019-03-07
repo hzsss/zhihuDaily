@@ -20,6 +20,7 @@ class HomeNewsCell: UITableViewCell {
             
             let imageURL = URL(string: story?.images.first ?? "")
             coverImageView.kf.setImage(with: imageURL)
+            coverImageView.kf.indicatorType = .activity
         }
     }
     

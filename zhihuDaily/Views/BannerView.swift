@@ -40,11 +40,19 @@ class BannerDetailView: UIView {
         
         // 标题高度
         let titleLabelHeight = titleLabel.sizeThatFits(bounds.size).height
-        titleLabel.frame = CGRect(x: 10, y: bounds.height - titleLabelHeight - 10, width: bounds.width, height: titleLabelHeight)
+        titleLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(10)
+            make.bottom.equalTo(-10)
+            make.width.equalTo(self)
+        }
         
         // 标题背景
-        let titleBgViewHeight = titleLabelHeight + 20
-        titleBgView.frame = CGRect(x: 0, y: bounds.height - titleBgViewHeight, width: bounds.width, height: titleBgViewHeight)
+        titleBgView.snp.makeConstraints { (make) in
+            make.left.equalTo(0)
+            make.bottom.equalTo(0)
+            make.width.equalTo(self)
+            make.height.equalTo(titleLabelHeight + 20)
+        }
     }
     
     func update(with topStory: TopStory) {
@@ -54,6 +62,7 @@ class BannerDetailView: UIView {
         // 设置图片
         let imageURL = URL(string: topStory.imageURL)
         imageView.kf.setImage(with: imageURL)
+        imageView.kf.indicatorType = .activity
         
         self.topStory = topStory
         
@@ -97,12 +106,19 @@ class BannerView: UIView, UIScrollViewDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
         pageControl.snp.makeConstraints { (make) in
             make.centerX.equalTo(center)
             make.bottom.equalTo(0)
             make.height.equalTo(20)
         }
-        scrollView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height - 20)
+        
+        scrollView.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self)
+            make.top.equalTo(0)
+            make.width.equalTo(self)
+            make.height.equalTo(bounds.height - 20)
+        }
     }
     
     func configScrollView() { // 后续需要优化，太冗余

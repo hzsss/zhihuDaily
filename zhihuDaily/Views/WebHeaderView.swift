@@ -24,8 +24,8 @@ class WebHeaderView: UIView {
         sourceLabel.textColor = .white
         sourceLabel.font = UIFont.systemFont(ofSize: 10.0)
         
-        shadowView.backgroundColor = .gray
-        shadowView.alpha = 0.6
+        shadowView.backgroundColor = .black
+        shadowView.alpha = 0.3
         bgImageView.contentMode = .scaleAspectFill
         bgImageView.layer.masksToBounds = true
         
@@ -41,15 +41,17 @@ class WebHeaderView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let sourceLabelSize = sourceLabel.sizeThatFits(bounds.size)
-        sourceLabel.frame = CGRect(x: bounds.width - sourceLabelSize.width - 10,
-                                   y: bounds.height - sourceLabelSize.height - 5,
-                                   width: sourceLabelSize.width,
-                                   height: sourceLabelSize.height)
-        
-        
-        let titleLabelHeight = titleLabel.sizeThatFits(bounds.size).height
-        titleLabel.frame = CGRect(x: 10, y: sourceLabel.frame.minY - titleLabelHeight - 10, width: bounds.width, height: titleLabelHeight)
+
+        sourceLabel.snp.makeConstraints { (make) in
+            make.right.equalTo(-5)
+            make.bottom.equalTo(-5)
+        }
+
+        titleLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(10)
+            make.bottom.equalTo(-(sourceLabel.bounds.height + 10))
+            make.width.equalTo(bounds.width)
+        }
         
         bgImageView.frame = bounds
         shadowView.frame = bounds
@@ -58,9 +60,11 @@ class WebHeaderView: UIView {
     func setupWebHeaderView(imageURL: URL?, title: String?, source: String?) {
         
         bgImageView.kf.setImage(with: imageURL)
+        bgImageView.kf.indicatorType = .activity
+        
         titleLabel.text = title
         if let sourceText = source {
-            sourceLabel.text = "图片 \(sourceText)"
+            sourceLabel.text = "图片: \(sourceText)"
         }
         
         setNeedsLayout()

@@ -9,13 +9,13 @@
 import UIKit
 import Moya
 
-enum MyService {
+enum NewsMoya {
     case getNews // 获取热报数据
     case getNewsDetail(userId: Int) // 获取文章详情数据
     case getNewsExtra(userId: Int) // 获取新闻额外信息
 }
 
-extension MyService: TargetType {
+extension NewsMoya: TargetType {
     
     var baseURL: URL {
         return URL(string: "https://news-at.zhihu.com/api/4")!
